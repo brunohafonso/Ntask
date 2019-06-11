@@ -1,12 +1,14 @@
 {
     "presets": [
-        "es2015"
-    ],
-    "env": {
-        "test": {
-            "plugins": [
-                "istanbul"
-            ]
-        }
-    }
+        [
+            "@babel/env",
+            {
+                "targets": {
+                    "browsers": [
+                        "last 2 Chrome versions"
+                    ]
+                }
+            }
+        ]
+    ]
 }

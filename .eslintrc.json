@@ -1,7 +1,18 @@
 {
     "extends": "airbnb",
     "rules": {
+        "import/named": "off",
         "no-console": "off",
+        "no-param-reassign": [
+            "error",
+            {
+                "props": true,
+                "ignorePropertyModificationsFor": [
+                    "user",
+                    "req"
+                ]
+            }
+        ],
         "import/no-extraneous-dependencies": [
             "error",
             {
@@ -19,5 +30,13 @@
         ]
     },
     "globals": {
+        "describe": true,
+        "it": true,
+        "app": true,
+        "after": true,
+        "done": true,
+        "expect": true,
+        "request": true,
+        "beforeEach": true
     }
 }
