@@ -1,4 +1,4 @@
-import config from '../config/config';
+import { jwtSecret } from '../config/config';
 
 const jwt = require('jsonwebtoken');
 
@@ -9,7 +9,7 @@ async function generateToken(userData) {
       id,
       email,
     },
-    config().jwtSecret,
+    jwtSecret,
     {
       expiresIn: '1hr',
     },
@@ -21,7 +21,7 @@ async function generateToken(userData) {
 async function validateToken(token) {
   let result;
 
-  await jwt.verify(token, config().jwtSecret, (error, decoded) => {
+  await jwt.verify(token, jwtSecret, (error, decoded) => {
     if (error) {
       result = {
         success: false,

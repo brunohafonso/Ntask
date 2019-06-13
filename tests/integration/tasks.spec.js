@@ -5,8 +5,8 @@ import app from '../../app';
 
 
 const request = supertest(app);
-const Users = app.database.db.models.Users;
-const Tasks = app.database.db.models.Tasks;
+const Users = app.get('db').models.Users;
+const Tasks = app.get('db').models.Tasks;
 let token;
 let fakeTest;
 

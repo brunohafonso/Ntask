@@ -1,151 +1,351 @@
-import * as httpStatus from 'http-status';
-import { generateToken } from '../libs/token';
 import authMiddleware from '../middlewares/auth';
+import UsersController from '../controllers/users';
 
 module.exports = (app) => {
-  const Users = app.database.db.models.Users;
   /**
- * @swagger
- *  tags:
- *    - name: "Users"
- *      description: "Endpoints of the users"
- *
- * definitions:
- *   userDataAuth:
- *     type: object
- *     required:
- *       - email
- *       - password
- *     properties:
- *       email:
- *         type: string
- *       password:
- *         type: string
- *         format: password
- *
- *   loginObject:
- *      type: object
- *      required:
- *        - success
- *        - token
- *      properties:
- *        success:
- *          type: boolean
- *        token:
- *          type: string
- *
- *   errorMessage:
- *     type: object
- *     required:
- *       - message
- *     properties:
- *       message:
- *         type: string
- *
- */
-
+   * @swagger
+   *  tags:
+   *    - name: "Users"
+   *      description: "Endpoints of the users"
+   *
+   * definitions:
+   *   userDataAuth:
+   *     type: object
+   *     properties:
+   *       email:
+   *         type: string
+   *       password:
+   *         type: string
+   *         format: password
+   *
+   *   loginObject:
+   *      type: object
+   *      properties:
+   *        success:
+   *          type: boolean
+   *        token:
+   *          type: string
+   *
+   *   user:
+   *    type: object
+   *    properties:
+   *      id:
+   *        type: integer
+   *      name:
+   *        type: string
+   *      email:
+   *        type: string
+   *      createAt:
+   *        type: date-time
+   *      updatedAt:
+   *        type: date-time
+   *
+   *   errorMessage:
+   *     type: object
+   *     required:
+   *       - message
+   *     properties:
+   *       message:
+   *         type: string
+   *
+  */
 
   /**
- * @swagger
- *
- * /login:
- *   post:
- *     tags:
- *        - Users
- *     summary: Login user to the application
- *     description: Login to the application
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: userDataAuth
- *         description: User credentials
- *         in: body
- *         required: true
- *         type: object
- *         schema:
- *           $ref: '#/definitions/userDataAuth'
- *     responses:
- *       200:
- *         description: Login with success
- *         content:
- *            application/json:
- *                schema:
- *                    $ref: '#/definitions/loginObject'
- *       404:
- *          description: user not found on database with email informed
- *          content:
- *            application/json:
- *                schema:
- *                    $ref: '#/definitions/errorMessage'
- */
+   * @swagger
+   *
+   * /login:
+   *    post:
+   *     tags:
+   *        - Users
+   *     summary: Login user to the application
+   *     description: Login to the application
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: userDataAuth
+   *         description: User credentials
+   *         in: body
+   *         required: true
+   *         type: object
+   *         schema:
+   *           $ref: '#/definitions/userDataAuth'
+   *     responses:
+   *       200:
+   *         description: Login with success
+   *         content:
+   *            application/json:
+   *                schema:
+   *                    $ref: '#/definitions/loginObject'
+   *       404:
+   *          description: user not found on database with email informed
+   *          content:
+   *            application/json:
+   *                schema:
+   *                    $ref: '#/definitions/errorMessage'
+  */
+  const usersController = UsersController(app);
+
   app.post('/login', async (req, res) => {
-    if (req.body.email && req.body.password) {
-      const { email, password } = req.body;
-      Users.findOne({ where: { email } })
-        .then(async (user) => {
-          if (!user) {
-            return res.status(httpStatus.NOT_FOUND).json({ message: 'user not found' });
-          }
-
-          if (await Users.isPassword(password, user.password)) {
-            return res.status(httpStatus.OK).json({
-              success: true,
-              token: await generateToken({ id: user.id, email: user.email }),
-            });
-          }
-
-          return res.status(httpStatus.UNAUTHORIZED).json({
-            success: false,
-            message: 'User or password incorrect',
-          });
-        })
-        .catch(err => res.status(httpStatus.UNAUTHORIZED).json({
-          success: false,
-          message: `error to authenticate user - ${err.message}`,
-        }));
-    } else {
-      return res.status(httpStatus.UNAUTHORIZED).json({ message: 'You need to inform the credentials correctly' });
-    }
-    return true;
+    usersController.authenticateUser(req.body)
+      .then((response) => {
+        res.status(response.statusCode).json(response.data);
+      })
+      .catch((err) => {
+        res.status(err.statusCode).json(err.data);
+      });
   });
 
   app.route('/users')
-    .get(async (req, res) => {
-      Users.findAll({
-        attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
-      })
-        .then(users => res.status(httpStatus.OK).json({ users }))
-        .catch(err => res.status(httpStatus.PRECONDITION_FAILED).json({ message: `Error to get users - ${err.message}` }));
+    /**
+     * @swagger
+     *
+     * /users:
+     *   get:
+     *     security:
+     *        - bearerAuth: []
+     *     tags:
+     *        - Users
+     *     summary: List all users
+     *     description: return a list of users
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *        - name: Authorization
+     *          description: Bearer token to allow the requests
+     *          in: header
+     *          required: true
+     *          type: api_key
+     *     responses:
+     *       200:
+     *         description: return a list of users
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    users:
+     *                      type: array
+     *                      items:
+     *                        $ref: '#/definitions/user'
+     *       401:
+     *         description: user not authenticated
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    errorMessage:
+     *                      type: string
+    */
+    .get(authMiddleware, async (req, res) => {
+      usersController.getAllUser()
+        .then((response) => {
+          res.status(response.statusCode).json(response.data);
+        })
+        .catch((err) => {
+          res.status(err.statusCode).json(err.data);
+        });
     })
+    /**
+     * @swagger
+     *
+     * /users:
+     *   post:
+     *     tags:
+     *        - Users
+     *     summary: create a new user
+     *     description: return the new user
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *        - name: userData
+     *          description: the data to create a new user
+     *          in: body
+     *          required: true
+     *          schema:
+     *            type: object
+     *            properties:
+     *              name:
+     *                type: string
+     *              email:
+     *                type: string
+     *              password:
+     *                type: string
+     *
+     *
+     *     responses:
+     *       200:
+     *         description: return a list of users
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    users:
+     *                      type: array
+     *                      items:
+     *                        $ref: '#/definitions/user'
+     *       401:
+     *         description: user not authenticated
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    errorMessage:
+     *                      type: string
+    */
     .post(async (req, res) => {
-      Users.create(req.body)
-        .then(user => res.status(httpStatus.CREATED).json({ user }))
-        .catch(err => res.status(httpStatus.PRECONDITION_FAILED).json({ message: `Error to create user - ${err.message}` }));
+      usersController.insertUser(req.body)
+        .then((response) => {
+          res.status(response.statusCode).json(response.data);
+        })
+        .catch((err) => {
+          res.status(err.statusCode).json(err.data);
+        });
     });
 
   app.route('/user')
     .all(authMiddleware)
+    /**
+     * @swagger
+     *
+     * /user:
+     *   get:
+     *     security:
+     *        - bearerAuth: []
+     *     tags:
+     *        - Users
+     *     summary: get the authenticated user
+     *     description: return the authenticated user
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *        - name: Authorization
+     *          description: Bearer token to allow the requests
+     *          in: header
+     *          required: true
+     *          type: api_key
+     *
+     *     responses:
+     *       200:
+     *         description: return a list of users
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    users:
+     *                      type: array
+     *                      items:
+     *                        $ref: '#/definitions/user'
+     *       401:
+     *         description: user not authenticated
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    errorMessage:
+     *                      type: string
+    */
     .get(async (req, res) => {
-      Users.findByPk(req.user.id, {
-        attributes: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
-      })
-        .then((user) => {
-          if (!user) {
-            res.status(httpStatus.NOT_FOUND).json({ message: 'user not found' });
-          } else {
-            res.status(httpStatus.OK).json({ user });
-          }
+      usersController.findUserById(req.user.id)
+        .then((response) => {
+          res.status(response.statusCode).json(response.data);
         })
-        .catch(err => res.status(httpStatus.PRECONDITION_FAILED).json({ message: `Error to get user - ${err.message}` }));
+        .catch((err) => {
+          res.status(err.statusCode).json(err.data);
+        });
     })
+    /**
+     * @swagger
+     *
+     * /user:
+     *   put:
+     *     security:
+     *        - bearerAuth: []
+     *     tags:
+     *        - Users
+     *     summary: get the authenticated user
+     *     description: return the authenticated user
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *        - name: Authorization
+     *          description: Bearer token to allow the requests
+     *          in: header
+     *          required: true
+     *          type: api_key
+     *
+     *     responses:
+     *       204:
+     *         description: return just the status code 204
+     *         content:
+     *            application/json:
+     *
+     *       401:
+     *         description: user not authenticated
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    errorMessage:
+     *                      type: string
+    */
     .put(async (req, res) => {
-      Users.update(req.body, { where: { id: req.user.id } })
-        .then(() => res.sendStatus(httpStatus.NO_CONTENT))
-        .catch(err => res.status(httpStatus.PRECONDITION_FAILED).json({ message: `Error to update user - ${err.message}` }));
+      usersController.updateUser(req.body, req.user.id)
+        .then((response) => {
+          res.sendStatus(response.statusCode);
+        })
+        .catch((err) => {
+          res.status(err.statusCode).json(err.data);
+        });
     })
+    /**
+     * @swagger
+     *
+     * /user:
+     *   delete:
+     *     security:
+     *        - bearerAuth: []
+     *     tags:
+     *        - Users
+     *     summary: delete the authenticated user
+     *     description: return just the status code 204
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *        - name: Authorization
+     *          description: Bearer token to allow the requests
+     *          in: header
+     *          required: true
+     *          type: api_key
+     *
+     *     responses:
+     *       204:
+     *         description: return a list of users
+     *         content:
+     *            application/json:
+     *
+     *       401:
+     *         description: user not authenticated
+     *         content:
+     *            application/json:
+     *                schema:
+     *                  type: object
+     *                  properties:
+     *                    errorMessage:
+     *                      type: string
+    */
     .delete(async (req, res) => {
-      Users.destroy({ where: { id: req.user.id } })
-        .then(() => res.sendStatus(httpStatus.NO_CONTENT))
-        .catch(err => res.status(httpStatus.PRECONDITION_FAILED).json({ message: `Error to delete user - ${err.message}` }));
+      usersController.deleteUser(req.user.id)
+        .then((response) => {
+          res.sendStatus(response.statusCode);
+        })
+        .catch((err) => {
+          res.status(err.statusCode).json(err.data);
+        });
     });
 };

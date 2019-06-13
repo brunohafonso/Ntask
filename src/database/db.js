@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
+import config from '../config/config';
 
 let db;
 
-module.exports = (app) => {
+module.exports = () => {
   const {
     database, username, password, params,
-  } = app.config.config;
+  } = config;
 
   if (!db) {
     const sequelize = new Sequelize(database, username, password, params);

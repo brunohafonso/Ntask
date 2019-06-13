@@ -1,6 +1,8 @@
 {
     "extends": "airbnb",
     "rules": {
+        "consistent-return": "off",
+        "new-cap": "off",
         "import/named": "off",
         "no-console": "off",
         "no-param-reassign": [

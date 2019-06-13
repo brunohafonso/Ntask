@@ -13,14 +13,14 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'This field cant be null',
+          msg: 'name cant be null',
         },
       },
     },
     email: {
       type: DataTypes.STRING,
       unique: {
-        msg: 'This field cant be null',
+        msg: 'The email informed is already in use',
       },
       allowNull: false,
       validate: {
@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
           msg: 'The email you entered is invalid or is already in our system.',
         },
         notEmpty: {
-          msg: 'This field cant be null',
+          msg: 'email cant be null',
         },
       },
     },
@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'This field cant be null',
+          msg: 'passoword cant be null',
         },
       },
     },

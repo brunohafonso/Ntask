@@ -5,7 +5,7 @@ import app from '../../app';
 
 
 const request = supertest(app);
-const Users = app.database.db.models.Users;
+const Users = app.get('db').models.Users;
 let token;
 
 describe('POST /login', () => {
@@ -40,14 +40,14 @@ describe('POST /login', () => {
       });
   });
 
-  it(`status 401 empty credentials - 
+  it(`status 400 empty credentials - 
     should return error message when the email or password is blank`, (done) => {
     request.post('/login')
       .send({
         email: '',
         password: '',
       })
-      .expect(401)
+      .expect(400)
       .end((error, response) => {
         expect(response.body).to.include.keys('message');
         expect(response.body.message).to.be.equal('You need to inform the credentials correctly');
@@ -55,14 +55,14 @@ describe('POST /login', () => {
       });
   });
 
-  it(`status 401 wrong password - 
+  it(`status 200 wrong password - 
   should return error message when the password is wrong`, (done) => {
     request.post('/login')
       .send({
         email: 'brunohafonso@gmail.com',
         password: '12',
       })
-      .expect(401)
+      .expect(200)
       .end((error, response) => {
         expect(response.body).to.include.keys('message');
         expect(response.body.message).to.be.equal('User or password incorrect');
@@ -108,7 +108,7 @@ describe('POST /users', () => {
   });
 
   it(`status 412 wrong user data - 
-  should return the user inserted on db`, (done) => {
+  should return an error message`, (done) => {
     request.post('/users')
       .send({
         name: '',
@@ -124,7 +124,7 @@ describe('POST /users', () => {
   });
 
   it(`status 412 invalid email - 
-  should return the user inserted on db`, (done) => {
+  should return an error message`, (done) => {
     request.post('/users')
       .send({
         name: '',

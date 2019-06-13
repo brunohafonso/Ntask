@@ -2,10 +2,10 @@ import * as httpStatus from 'http-status';
 import authMiddleware from '../middlewares/auth';
 
 module.exports = (app) => {
-  const Tasks = app.database.db.models.Tasks;
+  const Tasks = app.get('db').models.Tasks;
   app.route('/tasks')
     .all(authMiddleware)
-    .get(async (_req, res) => {
+    .get(async (req, res) => {
       Tasks.findAll({})
         .then((tasks) => {
           res.status(httpStatus.OK).json({ tasks });
