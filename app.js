@@ -10,7 +10,7 @@ import helmet from 'helmet';
 import specs from './src/libs/swagger';
 import logger from './src/libs/logger';
 import db from './src/database/db';
-import routes from './src/routes/index';
+import routes from './src/routes/index.route';
 
 dotenv.config(); // carregando variaveis de ambiente
 const app = express();

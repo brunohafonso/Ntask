@@ -1,5 +1,6 @@
 --require @babel/register
---reporter spec
+--reporter mocha-multi-reporters
+--reporter-options configFile=tests/integration/config.json
 --slow 5000
 --timeout 5000
 

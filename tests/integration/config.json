@@ -1,0 +1,12 @@
+{
+    "reporterEnabled": "mocha-junit-reporter, mochawesome",
+    "mochawesomeReporterOptions": {
+        "reportTitle": "Ntask",
+        "reportPageTitle": "Ntask",
+        "reportDir": "tests/integration/reports/htmlReports",
+        "reportFilename": "resultEvidences"
+    },
+    "mochaJunitReporterReporterOptions": {
+        "mochaFile": "tests/integration/reports/junitReports.xml"
+    }
+}

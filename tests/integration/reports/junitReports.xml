@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.1360000000000001" tests="17" failures="0">
+  <testsuite name="Root Suite" timestamp="2019-06-14T05:43:37" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="GET: /tasks" timestamp="2019-06-14T05:43:37" tests="2" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\tasks.spec.js" failures="0" time="0.078">
+    <testcase name="GET: /tasks status 200 - 
+  should return a list with two tasks" time="0.072" classname="status 200 - 
+  should return a list with two tasks">
+    </testcase>
+    <testcase name="GET: /tasks status 401 - 
+  when user is not authenticated" time="0.006" classname="status 401 - 
+  when user is not authenticated">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET: /tasks/:id" timestamp="2019-06-14T05:43:38" tests="2" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\tasks.spec.js" failures="0" time="0.020999999999999998">
+    <testcase name="GET: /tasks/:id status 200 - should return a task" time="0.01" classname="status 200 - should return a task">
+    </testcase>
+    <testcase name="GET: /tasks/:id status 404 - should return a message of not found" time="0.011" classname="status 404 - should return a message of not found">
+    </testcase>
+  </testsuite>
+  <testsuite name="PUT: /tasks/:id" timestamp="2019-06-14T05:43:38" tests="1" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\tasks.spec.js" failures="0" time="0.222">
+    <testcase name="PUT: /tasks/:id status 204 - should return nothing" time="0.222" classname="status 204 - should return nothing">
+    </testcase>
+  </testsuite>
+  <testsuite name="DELETE: /tasks/:id" timestamp="2019-06-14T05:43:38" tests="2" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\tasks.spec.js" failures="0" time="0.123">
+    <testcase name="DELETE: /tasks/:id status 204 - should return the status 204" time="0.118" classname="status 204 - should return the status 204">
+    </testcase>
+    <testcase name="DELETE: /tasks/:id status 401 - 
+  when user is not authenticated" time="0.005" classname="status 401 - 
+  when user is not authenticated">
+    </testcase>
+  </testsuite>
+  <testsuite name="POST /login" timestamp="2019-06-14T05:43:38" tests="4" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\users.spec.js" failures="0" time="0.209">
+    <testcase name="POST /login status 200 correct credentials - 
+    should return the token of authenticated user" time="0.09" classname="status 200 correct credentials - 
+    should return the token of authenticated user">
+    </testcase>
+    <testcase name="POST /login status 400 empty credentials - 
+    should return error message when the email or password is blank" time="0.005" classname="status 400 empty credentials - 
+    should return error message when the email or password is blank">
+    </testcase>
+    <testcase name="POST /login status 200 wrong password - 
+  should return error message when the password is wrong" time="0.088" classname="status 200 wrong password - 
+  should return error message when the password is wrong">
+    </testcase>
+    <testcase name="POST /login status 404 credentials that does not exist - 
+    should return error when the email informed does not exist" time="0.026" classname="status 404 credentials that does not exist - 
+    should return error when the email informed does not exist">
+    </testcase>
+  </testsuite>
+  <testsuite name="POST /users" timestamp="2019-06-14T05:43:40" tests="3" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\users.spec.js" failures="0" time="0.243">
+    <testcase name="POST /users status 201 correct user data - 
+  should return the user inserted on db" time="0.218" classname="status 201 correct user data - 
+  should return the user inserted on db">
+    </testcase>
+    <testcase name="POST /users status 412 wrong user data - 
+  should return an error message" time="0.018" classname="status 412 wrong user data - 
+  should return an error message">
+    </testcase>
+    <testcase name="POST /users status 412 invalid email - 
+  should return an error message" time="0.007" classname="status 412 invalid email - 
+  should return an error message">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /user" timestamp="2019-06-14T05:43:41" tests="1" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\users.spec.js" failures="0" time="0.008">
+    <testcase name="GET /user status 200 - should return an authenticated user" time="0.008" classname="status 200 - should return an authenticated user">
+    </testcase>
+  </testsuite>
+  <testsuite name="DELETE /user" timestamp="2019-06-14T05:43:41" tests="1" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\users.spec.js" failures="0" time="0.112">
+    <testcase name="DELETE /user status 204 - should return nothing" time="0.112" classname="status 204 - should return nothing">
+    </testcase>
+  </testsuite>
+  <testsuite name="PUT /user" timestamp="2019-06-14T05:43:41" tests="1" file="C:\Users\bhenriquea\Desktop\testes node\livro-api-nodejs\Ntask\tests\integration\users.spec.js" failures="0" time="0.12">
+    <testcase name="PUT /user status 204 - should return nothing" time="0.12" classname="status 204 - should return nothing">
+    </testcase>
+  </testsuite>
+</testsuites>
