@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "nodemon --exec babel-node index.js ",
-    "start": "babel-node cluster.js",
+    "start": "babel-node index.js",
     "lint": "eslint \"**/*.js\"",
     "lint:fix": "eslint \"**/*.js\" -o ./lint.html -f html --fix",
     "test:unit": "mocha --opts tests/unit/mocha.opts tests/unit/*.spec.js",

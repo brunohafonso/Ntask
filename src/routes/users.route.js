@@ -227,7 +227,7 @@ module.exports = (app) => {
      *        - bearerAuth: []
      *     tags:
      *        - Users
-     *     summary: get the authenticated user
+     *     summary: update the authenticated user
      *     description: return the authenticated user
      *     produces:
      *       - application/json
