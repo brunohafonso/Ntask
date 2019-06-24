@@ -6,6 +6,7 @@ import * as swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
+const apiMetrics = require('prometheus-api-metrics');
 
 import specs from './src/libs/swagger';
 import logger from './src/libs/logger';
@@ -40,6 +41,7 @@ app.use((req, _res, next) => {
   delete req.body.id;
   next();
 });
+app.use(apiMetrics());
 
 // configurando variaveis do app
 // faz com que o json que vai ser enviado nos endpoints seja formatado de forma amigavel

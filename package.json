@@ -32,6 +32,8 @@
     "mocha-multi-reporters": "^1.1.7",
     "mochawesome": "^4.0.0",
     "morgan": "^1.9.1",
+    "prom-client": "^11.5.2",
+    "prometheus-api-metrics": "^2.2.2",
     "sequelize": "^5.8.7",
     "sqlite": "^3.0.3",
     "swagger-jsdoc": "^3.2.9",
