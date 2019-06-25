@@ -11,7 +11,8 @@
                 "props": true,
                 "ignorePropertyModificationsFor": [
                     "user",
-                    "req"
+                    "req",
+                    "res"
                 ]
             }
         ],

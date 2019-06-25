@@ -1,4 +1,4 @@
-import UsersService from '../services/users.service';
+const UsersService = require('../services/users.service');
 
 module.exports = (app) => {
   const usersService = UsersService(app);

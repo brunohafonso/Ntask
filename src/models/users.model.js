@@ -1,7 +1,6 @@
-import { DataTypes } from 'sequelize';
-import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
     id: {
       type: DataTypes.INTEGER,

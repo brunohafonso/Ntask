@@ -1,4 +1,4 @@
-import * as httpStatus from 'http-status';
+const httpStatus = require('http-status');
 
 function defaultResponse(response, statusCode = httpStatus.OK) {
   return {

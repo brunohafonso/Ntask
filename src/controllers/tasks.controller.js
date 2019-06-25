@@ -1,4 +1,4 @@
-import TasksService from '../services/tasks.service';
+const TasksService = require('../services/tasks.service');
 
 
 module.exports = (app) => {

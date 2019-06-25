@@ -7,18 +7,17 @@
   "author": "Bruno Afonso (brunohafonso@gmail.com)",
   "license": "MIT",
   "scripts": {
-    "start:dev": "nodemon --exec babel-node index.js ",
-    "start": "babel-node index.js",
+    "start:dev": "nodemon index.js ",
+    "start": "node index.js",
     "lint": "eslint \"**/*.js\"",
     "lint:fix": "eslint \"**/*.js\" -o ./lint.html -f html --fix",
+    "test:vulnerability": "set https_proxy=http://proxylatam.indra.es:8080/ && snyk auth && snyk wizard -d",
     "test:unit": "mocha --opts tests/unit/mocha.opts tests/unit/*.spec.js",
     "test:integration": "nyc mocha --opts tests/integration/mocha.opts tests/integration/*.spec.js",
     "test": "npm run test:unit && npm run test:integration",
     "coverage": "nyc report --reporter=lcov"
   },
   "dependencies": {
-    "@babel/register": "^7.4.4",
-    "babel-polyfill": "^6.26.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -33,20 +32,14 @@
     "mochawesome": "^4.0.0",
     "morgan": "^1.9.1",
     "prom-client": "^11.5.2",
-    "prometheus-api-metrics": "^2.2.2",
-    "sequelize": "^5.8.7",
+    "sequelize": "5.8.11",
     "sqlite": "^3.0.3",
     "swagger-jsdoc": "^3.2.9",
     "swagger-ui-express": "^4.0.6",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/node": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
     "@hapi/joi": "^15.0.3",
-    "babel-plugin-transform-regenerator": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -57,6 +50,7 @@
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
+    "snyk": "^1.181.0",
     "supertest": "^4.0.2"
   }
 }

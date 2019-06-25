@@ -1,5 +1,5 @@
-import authMiddleware from '../middlewares/auth';
-import TasksController from '../controllers/tasks.controller';
+const authMiddleware = require('../middlewares/auth');
+const TasksController = require('../controllers/tasks.controller');
 
 module.exports = (app) => {
   const tasksController = TasksController(app);

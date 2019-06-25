@@ -1,6 +1,4 @@
-import { DataTypes } from 'sequelize';
-
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const Tasks = sequelize.define('Tasks', {
     id: {
       type: DataTypes.INTEGER,

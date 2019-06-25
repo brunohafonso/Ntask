@@ -1,5 +1,5 @@
-import tasks from './tasks.route';
-import users from './users.route';
+const tasks = require('./tasks.route');
+const users = require('./users.route');
 
 module.exports = (app) => {
   tasks(app);

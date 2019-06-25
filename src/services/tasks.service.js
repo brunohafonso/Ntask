@@ -1,5 +1,5 @@
-import * as httpStatus from 'http-status';
-import { defaultResponse, errorResponse } from '../libs/response';
+const httpStatus = require('http-status');
+const { defaultResponse, errorResponse } = require('../libs/response');
 
 module.exports = (app) => {
   const Tasks = app.get('db').models.Tasks;

@@ -1,6 +1,6 @@
-import { jwtSecret } from '../config/config';
-
 const jwt = require('jsonwebtoken');
+
+const { jwtSecret } = require('../config/config');
 
 async function generateToken(userData) {
   const { id, email } = userData;

@@ -1,4 +1,4 @@
-import logger from '../libs/logger';
+const logger = require('../libs/logger');
 
 module.exports = {
   database: 'ntask',

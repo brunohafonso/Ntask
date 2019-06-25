@@ -1,6 +1,6 @@
-import * as httpStatus from 'http-status';
-import { generateToken } from '../libs/token';
-import { defaultResponse, errorResponse } from '../libs/response';
+const httpStatus = require('http-status');
+const { generateToken } = require('../libs/token');
+const { defaultResponse, errorResponse } = require('../libs/response');
 
 module.exports = (app) => {
   const Users = app.get('db').models.Users;

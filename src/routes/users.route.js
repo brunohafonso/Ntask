@@ -1,5 +1,5 @@
-import authMiddleware from '../middlewares/auth';
-import UsersController from '../controllers/users.controller';
+const authMiddleware = require('../middlewares/auth');
+const UsersController = require('../controllers/users.controller');
 
 module.exports = (app) => {
   /**

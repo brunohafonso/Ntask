@@ -1,6 +1,6 @@
-import * as httpStatus from 'http-status';
-import { errorResponse } from '../libs/response';
-import { validateToken } from '../libs/token';
+const httpStatus = require('http-status');
+const { errorResponse } = require('../libs/response');
+const { validateToken } = require('../libs/token');
 
 module.exports = async (req, res, next) => {
   let response;
