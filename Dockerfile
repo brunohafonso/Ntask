@@ -1,9 +1,13 @@
 FROM node:slim
 
-COPY . .
+WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y build-essential && apt-get install -y python
+COPY . /usr/src/app
+
+RUN apt-get install -y build-essential
+
+RUN apt-get install -y python
 
 RUN npm install --production
 
-CMD npm start
+CMD ["npm", "start"]

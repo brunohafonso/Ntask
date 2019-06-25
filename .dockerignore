@@ -1,7 +1,8 @@
-node_modules
-.nyc_output
-coverage
-*.lock
-.env
-*.sqlite
-*.html
+**/node_modules
+**/node_modules/*
+**/.nyc_output
+**/coverage
+**/*.lock
+**/.env
+**/*.sqlite
+**/*.html
