@@ -1,6 +1,5 @@
 tasks:
-  - command: yarn install
-  - command: gp env PORT=3000
+  - before: yarn install && gp env PORT=3000 
   - init: yarn start:dev
     command: yarn start:dev
 ports:
