@@ -1,0 +1,10 @@
+tasks:
+  - dependencies: yarn install
+    command: yarn install
+  - config: gp env PORT=3000
+    command: gp env PORT=3000
+  - init: yarn start:dev
+    command: yarn start:dev
+ports:
+  - port: 3000
+    onOpen: open-preview
