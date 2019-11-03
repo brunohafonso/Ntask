@@ -1,3 +1,5 @@
+image:
+  file: .gitpod.Dockerfile
 tasks:
   - before: yarn install && gp env PORT=3000 
   - init: yarn start:dev
